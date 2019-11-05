@@ -1,0 +1,23 @@
+{
+  "name": "BookmarkApp20191105",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkful-ei-iguana/Dana-Bookmarks-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinkful-ei-iguana/Dana-Bookmarks-App/issues"
+  },
+  "homepage": "https://github.com/thinkful-ei-iguana/Dana-Bookmarks-App#readme",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
+}

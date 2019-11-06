@@ -22,30 +22,50 @@
       </div>
     </header>
     <main>
-      <!--This is one bookmark-->
-      <div class="bookmark" id="ljsflsjlfjs13142352546gsfg">
-        <div class="top-part">
-          <h2 class="bookmark-title">bookmark title</h2>
-          <button class="condenser" type="button">
-            <img src="" alt="condense or expand" />
-          </button>
-          <span class="rating">stars:5</span>
-        </div>
-        <a class="bookmark-link" href="example.com">example</a>
-        <p class="description">bookmark description</p>
-      </div>
-      <!--This is another bookmark-->
-      <div class="bookmark" id="ljsflsjlfjs13142352546gsfg">
-        <div class="top-part">
-          <h2 class="bookmark-title">bookmark title</h2>
-          <button class="condenser" type="button">
-            <img src="" alt="condense or expand" />
-          </button>
-          <span class="rating">stars:5</span>
-        </div>
-        <a class="bookmark-link" href="example.com">example</a>
-        <p class="description">bookmark description</p>
-      </div>
+      <ul class="bookmark-list">
+        <!--This is one bookmark-->
+        <li class="bookmark" id="ljsflsjlfjs13142352546gsfg">
+          <div class="top-part">
+            <h2 class="bookmark-title">bookmark title</h2>
+            <button class="condenser js-expanded" type="button">
+              <img src="" alt="condense or expand" />
+            </button>
+            <span class="rating">stars:5</span>
+          </div>
+          <a class="bookmark-link" href="example.com">example</a>
+          <p class="description">bookmark description</p>
+        </li>
+        <!--This is another bookmark-->
+        <li class="bookmark" id="ljsflsjlfjs13142352546gsfg">
+          <div class="top-part">
+            <h2 class="bookmark-title">bookmark title</h2>
+            <button class="condenser js-expanded" type="button">
+              <img src="" alt="condense or expand" />
+            </button>
+            <span class="rating">stars:5</span>
+          </div>
+          <a class="bookmark-link" href="example.com">example</a>
+          <p class="description">bookmark description</p>
+        </li>
+      </ul>
+      <code>
+          const store = {
+            bookmarks: [
+              {
+                id: '7ddr',
+                title: 'Title 11',
+                rating: 5,
+                url: 'http://www.title11.com',
+                description: 'lorem ipsum dolor',
+                expanded: true
+              }
+              ...
+            ],
+            adding: false,
+            error: null,
+            filter: 0
+          };
+      </code>
     </main>
   </body>
 </html>

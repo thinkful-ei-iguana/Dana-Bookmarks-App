@@ -22,30 +22,31 @@
       </div>
     </header>
     <main>
-      <ul class="bookmark-list">
-        <!--This is one bookmark-->
-        <li class="bookmark" id="ljsflsjlfjs13142352546gsfg">
-          <div class="top-part">
-            <h2 class="bookmark-title">bookmark title</h2>
-            <button class="condenser js-condensed" type="button">
-              <img src="" alt="condense or expand" />
-            </button>
-            <span class="rating">stars:5</span>
-          </div>
-        </li>
-        <!--This is another bookmark-->
-        <li class="bookmark" id="ljsflsjlfjs13142352546gsfg">
-          <div class="top-part">
-            <h2 class="bookmark-title">bookmark title</h2>
-            <button class="condenser js-condensed" type="button">
-              <img src="" alt="condense or expand" />
-            </button>
-            <span class="rating">stars:5</span>
-          </div>
-          <a class="bookmark-link" href="example.com">example</a>
-          <p class="description">bookmark description</p>
-        </li>
-      </ul>
+      <code>const store = {
+          bookmarks: [
+            {
+              id: 'x56w',
+              title: 'Title 1',
+              rating: 3,
+              url: 'http://www.title1.com',
+              description: 'lorem ipsum dolor sit',
+              expanded: false
+            },
+            {
+              id: '6ffw',
+              title: 'Title 2',
+              rating: 5,
+              url: 'http://www.title2.com',
+              description: 'dolorum tempore deserunt',
+              expanded: false
+            } 
+            ...
+          ],
+          adding: false,
+          error: null,
+          filter: 0
+        };
+      </code>
     </main>
   </body>
 </html>

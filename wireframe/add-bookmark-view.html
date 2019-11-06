@@ -9,16 +9,24 @@
   <body>
     <header>
       <h1>My Bookmarks</h1>
-      <div>
-        <button class="add-new">+ New</button>
-        <select class="filter" name="filter">
-          <option value="">Filter by minimum rating</option>
-          <option value="5">5</option>
-          <option value="4">4</option>
-          <option value="3">3</option>
-          <option value="2">2</option>
-          <option value="1">1</option>
-        </select>
+      <div class="controls">
+          <form class="add-new">
+              <label for="bookmark-url">URL: </label>
+              <input type="text" name="bookmark-url" id="bookmark-url" pattern="\bhttps?:\/\/\S{1,}" placeholder="http://www.example.com" required title="url must include http:// or https://">
+              <label for="bookmark-title">title: </label>
+              <input type="text" name="bookmark-title" id="bookmark-title" placeholder="~Bookmark Title ~">
+              <fieldset role="radiogroup">
+                  <legend for="bookmark-rating">Rating:</legend>
+                  <input type="radio" name="star" id="1-star" value="1">
+                  <input type="radio" name="star" id="2-stars" value="2">
+                  <input type="radio" name="star" id="3-stars" value="3">
+                  <input type="radio" name="star" id="4-stars" value="4">
+                  <input type="radio" name="star" id="5-stars" value="5">
+              </fieldset>
+              <input type="submit" class="new-bookmark" value="Add New Bookmark">
+              <input type="button" class="-cancel-new-bookmark" value="Cancel">
+            
+            </form>
       </div>
     </header>
     <main>

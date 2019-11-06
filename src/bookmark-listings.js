@@ -4,6 +4,8 @@ import api from './api';
 
 ///////////view construction////////
 const render = function(){
+  //if adding is true render the view for adding
+  
   //check for filter by stars
 
   //render the main view
@@ -15,6 +17,7 @@ const render = function(){
 
 const bindEventListeners = function () {
   handleSubmitBookmark();
+  handleClickShowAddBookmarkView();
   handleSubmitRatingOnBookmark();
   handleDisplayDetailedBookmark();
   handleDeleteBookmark();
@@ -28,6 +31,7 @@ const generateBookmarkListing = function(){
 const bindTogetherAllListings = function (bookmarkList) {
   
 };
+
 
 //////////////event handlers///////////////
 const handleClickExpandBookmark = function(){
@@ -43,12 +47,18 @@ const handleDisplayDetailedBookmark = function(){
 };
 
 const handleSubmitBookmark = function(){
-
+  $(submit).on('submit',event);
   //handle bad submissions with error view
 };
 
 const handleSubmitRatingOnBookmark = function(){
 
+};
+
+const handleClickShowAddBookmarkView = function(){
+  $('.add-new').on('click',event=>{
+    //render bookmark form view
+  });
 };
 
 export default {

@@ -5,7 +5,7 @@
 const baseURL = 'https://thinkful-list-api.herokuapp.com/dana/bookmarks';
 let options = {
   method:'',
-  headers:{ "Content-Type": "application/json" },
+  headers:{ 'Content-Type': 'application/json' },
 };
 
 const apiFetch = function (...args){

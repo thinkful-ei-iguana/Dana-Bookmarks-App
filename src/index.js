@@ -19,6 +19,7 @@ const main = function() {
     });
   //wait for user input and react to them
   bl.bindEventListeners();
+  bl.renderControls();
   bl.render();
 };
 

@@ -26,7 +26,11 @@ const findAndUpdate = function(id,newData) {
 };
 
 const setError = function(message) {
-  this.error = message;
+  this.error = message|| null;//if called with no params set back to null
+};
+
+const setAdding = function() {
+  this.adding = !this.adding;
 };
 
 
@@ -38,4 +42,7 @@ export default {
   changeFilter,
   findAndUpdate,
   setError,
+  setAdding,
+  filter,
+  error
 };

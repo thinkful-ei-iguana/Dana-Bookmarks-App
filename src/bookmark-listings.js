@@ -5,9 +5,9 @@ import { format } from 'path';
 import { create } from 'domain';
 
 ///////////view construction////////
-const render = function(){
+const render = function() {
   //if adding is true render the view for adding
-  if(store.adding){
+  if (store.adding) {
     $('main').html(`
         <form class="add-new"><!--add this form under the header div class controls-->
           <label for="bookmark-url">URL: </label>
@@ -30,29 +30,31 @@ const render = function(){
     $('header').html('<h1>My Bookmarks</h1>');
   }
   //render if error
-  else if (store.error){
-    
-  }
-  else {
-  //first add the ul <ul class="bookmark-list"> then add bookmarks to that list
+  else if (store.error) {
+    $('main').html(store.error);
+  } else {
+    //first add the ul <ul class="bookmark-list"> then add bookmarks to that list
     $('main').html(`
     <ul class="bookmark-list"></ul>
     `);
     //check for filter by stars
-    const filteredBookmarks = [...store.bookmarks].filter(bookmark=>bookmark.rating<=store.rating);
+    const filteredBookmarks = [...store.bookmarks].filter(
+      bookmark => bookmark.rating <= store.rating
+    );
 
     //render the main view
     $('.bookmark-list').html(
       filteredBookmarks
-        .map(bkmk=> generateBookmarkListing(bkmk.id, bkmk.title, bkmk.link, bkmk.desc))
+        .map(bkmk =>
+          generateBookmarkListing(bkmk.id, bkmk.title, bkmk.link, bkmk.desc)
+        )
         .join('')
-    
     );
-  //render the xpanded view if it is set?
+    //render the xpanded view if it is set?
   }
 };
 
-const renderControls = function () {
+const renderControls = function() {
   $('header').html(`
     <h1>My Bookmarks</h1>
     <div class="controls">
@@ -68,7 +70,7 @@ const renderControls = function () {
     </div>
   `);
 };
-const bindEventListeners = function () {
+const bindEventListeners = function() {
   handleSubmitBookmark();
   handleClickShowAddBookmarkView();
   handleSubmitRatingOnBookmark();
@@ -77,8 +79,8 @@ const bindEventListeners = function () {
   handleClickExpandBookmark();
 };
 
-const generateBookmarkListing = function(id, title, link, desc){
-  return`<li class="bookmark" id="${id}">
+const generateBookmarkListing = function(id, title, link, desc) {
+  return `<li class="bookmark" id="${id}">
   <div class="top-part">
     <h2 class="bookmark-title">${title}</h2>
     <button class="condenser js-expanded" type="button">
@@ -88,49 +90,44 @@ const generateBookmarkListing = function(id, title, link, desc){
   </div>
   <a class="bookmark-link" href="${link}">example</a>
   <p class="description">${desc}</p>
-</li>`
+</li>`;
 };
 
-const bindTogetherAllListings = function (bookmarkList) {
-  
-};
-
+const bindTogetherAllListings = function(bookmarkList) {};
 
 //////////////event handlers///////////////
-const handleClickExpandBookmark = function(){
+const handleClickExpandBookmark = function() {};
 
+const handleDeleteBookmark = function() {};
+
+const handleDisplayDetailedBookmark = function() {};
+
+const handleSubmitBookmark = function() {
+  $('.add-new').on('submit', event => {
+    event.preventDefault();
+    //handle bad submissions with error view
+    store.setError(); //resets error to null in case of error previously
+    store.setAdding(); //set back to adding = false
+
+    //get the form data
+    let formData = new FormData($('form.add-new')[0]);
+    console.log(formData);
+    // let formDataObj = formData.map(datum => o[name] = val);
+    //now call api POST
+    api.createBookmark(formData).then(newBookmark=>{
+      store.addBookmark(newBookmark);
+      render();
+      renderControls(); //controls are removed for adding mode putting them back after submission.
+    });
+  });
 };
 
-const handleDeleteBookmark = function(){
+const handleSubmitRatingOnBookmark = function() {};
 
-};
-
-const handleDisplayDetailedBookmark = function(){
-
-};
-
-const handleSubmitBookmark = function(){
-  $('.add-new').on('submit',event);
-  //handle bad submissions with error view
-  store.setError();//resets error to null in case of error previously
-  store.setAdding();//set back to adding = false
-  
-  //get the form data
-
-  //now call api POST
-  api.createBookmark(title,url,desc)
-  render();
-  renderControls();//controls are removed for adding mode putting them back after submission.
-};
-
-const handleSubmitRatingOnBookmark = function(){
-
-};
-
-const handleClickShowAddBookmarkView = function(){
-  $('.add-new').on('click', 'body', event=>{
-    store.setAdding();//sets adding to true
-    render();    
+const handleClickShowAddBookmarkView = function() {
+  $('.add-new').on('click', 'body', event => {
+    store.setAdding(); //sets adding to true
+    render();
   });
 };
 

@@ -37,8 +37,8 @@ const getBookmarks = function () {
   return apiFetch(baseURL,wrapOptions('GET'));
 };
 
-const createBookmark = function (title, url,desc) {
-  return apiFetch(baseURL,wrapOptions('POST',{title,url,desc}));
+const createBookmark = function (formData) {
+  return apiFetch(baseURL,wrapOptions('POST',formData));
 };
 
 const updateBookmark = function (id, property) {//may not be used

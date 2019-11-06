@@ -2,7 +2,7 @@ import $ from 'jquery';
 import './main.css';
 
 import api from './api';
-import bl from './bookmarks-listings';
+import bl from './bookmark-listings';
 import store from './store';
 
 
@@ -15,6 +15,7 @@ const main = function() {
     .getBookmarks()
     .then(bookmarks => {
       bookmarks.forEach(bookmark=>store.addBookmark(bookmark));
+      console.log(bookmarks);
       bl.render();
     });
   //wait for user input and react to them

@@ -1,15 +1,16 @@
 
-import {setError} from './store';
+import store from './store';
 //function wraps requsts to the api in an asynchronous fetch promise
 //inclues error handling for errors from using the api
 const baseURL = 'https://thinkful-list-api.herokuapp.com/dana/bookmarks';
 let options = {
   method:'',
-  headers:{ 'Content-Type': 'application/json' },
+  headers:new Headers({ 'Content-Type': 'application/json' }),
 };
 
 const apiFetch = function (...args){
   let error;
+  
   return fetch(...args)
     .then(res => {
       if (res.ok) {
@@ -22,8 +23,9 @@ const apiFetch = function (...args){
         error.message = data.message;
         return Promise.reject(error.message);
       }
+      console.log(data);
       return data;
-    }).catch(e=>setError(e));
+    }).catch(e=>store.setError(e));
 };
 
 //private function that wraps options in a valid JSON givin a method and optional body
@@ -34,7 +36,7 @@ const wrapOptions = function (method,body=null){
 };
 
 const getBookmarks = function () {
-  return apiFetch(baseURL,wrapOptions('GET'));
+  return apiFetch(baseURL);
 };
 
 const createBookmark = function (formData) {

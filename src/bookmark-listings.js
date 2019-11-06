@@ -6,6 +6,7 @@ import { create } from 'domain';
 
 ///////////view construction////////
 const render = function() {
+  
   //if adding is true render the view for adding
   if (store.adding) {
     $('main').html(`
@@ -29,8 +30,7 @@ const render = function() {
     `);
     $('header').html('<h1>My Bookmarks</h1>');
   }
-  //render if error
-  else if (store.error) {
+  else if (store.error) {//render if error
     $('main').html(store.error);
   } else {
     //first add the ul <ul class="bookmark-list"> then add bookmarks to that list
@@ -38,15 +38,13 @@ const render = function() {
     <ul class="bookmark-list"></ul>
     `);
     //check for filter by stars
-    const filteredBookmarks = [...store.bookmarks].filter(
-      bookmark => bookmark.rating <= store.rating
-    );
-
+    const filteredBookmarks = [...store.bookmarks].filter(bookmark => bookmark.rating <= store.rating || !bookmark.rating);
+    console.log(filteredBookmarks);
     //render the main view
     $('.bookmark-list').html(
       filteredBookmarks
         .map(bkmk =>
-          generateBookmarkListing(bkmk.id, bkmk.title, bkmk.link, bkmk.desc)
+          generateBookmarkListing(bkmk.id, bkmk.title, bkmk.url, bkmk.desc, bkmk.rating)
         )
         .join('')
     );
@@ -79,17 +77,17 @@ const bindEventListeners = function() {
   handleClickExpandBookmark();
 };
 
-const generateBookmarkListing = function(id, title, link, desc) {
+const generateBookmarkListing = function(id, title, url, desc, rating) {
   return `<li class="bookmark" id="${id}">
   <div class="top-part">
     <h2 class="bookmark-title">${title}</h2>
     <button class="condenser js-expanded" type="button">
       <img src="" alt="condense or expand" />
     </button>
-    <span class="rating">stars:5</span>
+    <span class="rating">stars:${rating||'Not yet rated'}</span>
   </div>
-  <a class="bookmark-link" href="${link}">example</a>
-  <p class="description">${desc}</p>
+  <a class="bookmark-link" href="${url}">${url}</a>
+  <p class="description">${desc||'This bookmark has not been described'}</p>
 </li>`;
 };
 

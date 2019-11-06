@@ -1,14 +1,16 @@
 const bookmarks = [];
 let adding = false;
 let error = null;
-let filter = 0;
+let filter = 5;
 
 const findById = function(id) {
   return this.bookmarks.find(bookmark=> bookmark.id===id);
 };
 
 const addBookmark = function(bookmark) {
+  console.log(bookmark);
   this.bookmarks.push(bookmark);
+  console.log(this.bookmarks);
 };
 
 const findAndDelete = function(id) {
@@ -35,7 +37,6 @@ const setAdding = function() {
 
 
 export default {
-  bookmarks,
   findById,
   addBookmark,
   findAndDelete,
@@ -44,5 +45,7 @@ export default {
   setError,
   setAdding,
   filter,
-  error
+  error,
+  adding,
+  bookmarks
 };

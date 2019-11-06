@@ -18,10 +18,10 @@ const render = function() {
           <fieldset role="radiogroup">
               <legend for="bookmark-rating">Rating:</legend>
               <label for="1-star">1 star</label><input type="radio" name="rating" id="1-star" value="1">
-              <label for="2-star">2 star</label<input type="radio" name="rating" id="2-stars" value="2">
-              <label for="3-star">3 star</label<input type="radio" name="rating" id="3-stars" value="3">
-              <label for="4-star">4 star</label<input type="radio" name="rating" id="4-stars" value="4">
-              <label for="5-star">5 star</label<input type="radio" name="rating" id="5-stars" value="5">
+              <label for="2-star">2 star</label><input type="radio" name="rating" id="2-stars" value="2">
+              <label for="3-star">3 star</label><input type="radio" name="rating" id="3-stars" value="3">
+              <label for="4-star">4 star</label><input type="radio" name="rating" id="4-stars" value="4">
+              <label for="5-star">5 star</label><input type="radio" name="rating" id="5-stars" value="5">
           </fieldset>
           <textarea name="desc" id="desc" placeholder="Describe this bookmark here ..."></textarea>
           <input type="submit" class="new-bookmark" value="Add New Bookmark">
@@ -123,7 +123,8 @@ const handleSubmitBookmark = function() {
 const handleSubmitRatingOnBookmark = function() {};
 
 const handleClickShowAddBookmarkView = function() {
-  $('.add-new').on('click', 'body', event => {
+  $('header').on('click','.add-new', event => {
+    console.log('hi');
     store.setAdding(); //sets adding to true
     render();
   });

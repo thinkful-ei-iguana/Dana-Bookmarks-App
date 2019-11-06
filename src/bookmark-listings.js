@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import store from './store';
 import api from './api';
 
@@ -10,6 +11,14 @@ const render = function(){
   //render the xpanded view if it is set?
 
   //render if error
+};
+
+const bindEventListeners = function () {
+  handleSubmitBookmark();
+  handleSubmitRatingOnBookmark();
+  handleDisplayDetailedBookmark();
+  handleDeleteBookmark();
+  handleClickExpandBookmark();
 };
 
 const generateBookmarkListing = function(){
@@ -40,4 +49,9 @@ const handleSubmitBookmark = function(){
 
 const handleSubmitRatingOnBookmark = function(){
 
+};
+
+export default {
+  bindEventListeners,
+  render
 };

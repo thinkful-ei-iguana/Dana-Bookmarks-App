@@ -162,7 +162,8 @@ const handleSubmitBookmark = function() {
 const handleFilterByRatingsOnBookmark = function() {
   $('select').on('change',event => {
     store.changeFilter(Number($('select option:selected').val())||5);
-    render();
+    render(); 
+    renderControls();
     bindEventListeners();
   });
 };

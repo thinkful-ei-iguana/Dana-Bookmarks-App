@@ -1,8 +1,6 @@
 import $ from 'jquery';
 import store from './store';
 import api from './api';
-import { format } from 'path';
-import { create } from 'domain';
 
 ///////////view construction////////
 const render = function() {
@@ -10,9 +8,9 @@ const render = function() {
   //if adding is true render the view for adding
   if (store.adding) {
     $('main').html(`
-        <form class="add-new"><!--add this form under the header div class controls-->
+        <form id="add-new-form" action="#"><!--add this form under the header div class controls-->
           <label for="bookmark-url">URL: </label>
-          <input type="text" name="url" id="bookmark-url" pattern="\bhttps?:\/\/\S{1,}" placeholder="http://www.example.com" required title="url must include http:// or https://">
+          <input type="text" name="url" id="bookmark-url" pattern="\\bhttps?:\\/\\/\\S{1,}" placeholder="http://www.example.com" required title="url must include http:// or https://">
           <label for="bookmark-title">title: </label>
           <input type="text" name="title" id="bookmark-title" placeholder="~Bookmark Title ~">
           <fieldset role="radiogroup">
@@ -25,7 +23,7 @@ const render = function() {
           </fieldset>
           <textarea name="desc" id="desc" placeholder="Describe this bookmark here ..."></textarea>
           <input type="submit" class="new-bookmark" value="Add New Bookmark">
-          <input type="button" class="-cancel-new-bookmark" value="Cancel">
+          <input type="button" class="cancel-new-bookmark" value="Cancel">
         </form>
     `);
     $('header').html('<h1>My Bookmarks</h1>');
@@ -38,8 +36,8 @@ const render = function() {
     <ul class="bookmark-list"></ul>
     `);
     //check for filter by stars
-    const filteredBookmarks = [...store.bookmarks].filter(bookmark => bookmark.rating <= store.rating || !bookmark.rating);
-    console.log(filteredBookmarks);
+    const filteredBookmarks = [...store.bookmarks].filter(bookmark => bookmark.rating <= store.filter || !bookmark.rating);
+
     //render the main view
     $('.bookmark-list').html(
       filteredBookmarks
@@ -101,19 +99,20 @@ const handleDeleteBookmark = function() {};
 const handleDisplayDetailedBookmark = function() {};
 
 const handleSubmitBookmark = function() {
-  $('.add-new').on('submit', event => {
+  $('#add-new-form').on('submit', event => {
     event.preventDefault();
     //handle bad submissions with error view
     store.setError(); //resets error to null in case of error previously
     store.setAdding(); //set back to adding = false
 
     //get the form data
-    let formData = new FormData($('form.add-new')[0]);
-    console.log(formData);
-    // let formDataObj = formData.map(datum => o[name] = val);
-    //now call api POST
-    api.createBookmark(formData).then(newBookmark=>{
+    let formData = new FormData($('#add-new-form')[0]);
+    let formDataObj = Object.fromEntries(formData);
+    
+    api.createBookmark(formDataObj).then(newBookmark=>{
       store.addBookmark(newBookmark);
+      
+      console.log(formDataObj);
       render();
       renderControls(); //controls are removed for adding mode putting them back after submission.
     });
@@ -122,11 +121,21 @@ const handleSubmitBookmark = function() {
 
 const handleSubmitRatingOnBookmark = function() {};
 
+const handleCancelSubmitBookmark =  function() {
+  $('.cancel-new-bookmark').on('click', event => {
+    console.log( 'click' );
+    store.setAdding();
+    render();
+    renderControls();
+  });
+};
+
 const handleClickShowAddBookmarkView = function() {
   $('header').on('click','.add-new', event => {
-    console.log('hi');
     store.setAdding(); //sets adding to true
     render();
+    handleSubmitBookmark();
+    handleCancelSubmitBookmark();
   });
 };
 

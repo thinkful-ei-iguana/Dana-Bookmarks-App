@@ -30,9 +30,9 @@ const apiFetch = function (...args){
 
 //private function that wraps options in a valid JSON givin a method and optional body
 const wrapOptions = function (method,body=null){
-  let opt = Object.assign(options,{method,body});
+  let opt = Object.assign(options,{method,body:body?JSON.stringify(body):null});
   if(!body)delete opt.body;
-  return JSON.stringify(opt);
+  return opt;
 };
 
 const getBookmarks = function () {

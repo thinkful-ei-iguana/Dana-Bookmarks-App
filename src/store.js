@@ -8,9 +8,7 @@ const findById = function(id) {
 };
 
 const addBookmark = function(bookmark) {
-  console.log(bookmark);
   this.bookmarks.push(bookmark);
-  console.log(this.bookmarks);
 };
 
 const findAndDelete = function(id) {

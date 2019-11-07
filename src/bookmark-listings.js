@@ -70,9 +70,8 @@ const bindEventListeners = function() {
   handleSubmitBookmark();
   handleClickShowAddBookmarkView();
   handleFilterByRatingsOnBookmark();
-  handleDisplayDetailedBookmark();
   handleDeleteBookmark();
-  handleClickExpandBookmark();
+  handleClickExpandOrCondenseBookmark();
 };
 
 const generateBookmarkListing = function(id, title, url, desc, rating) {
@@ -89,16 +88,16 @@ const generateBottomPartOfBookmark =  function (url,desc) {
   return `<div class="remainder">
     <a class="bookmark-link" href="${url}">${url}</a>
     <p class="description">${desc||'This bookmark has not been described'}</p>
-  </div>`
+  </div>`;
 };
 
 const generateTopPartOfBookmark = function(title, rating){
   return `<div class="top-part">
       <h2 class="bookmark-title">${title}</h2>
-      <button class="condenser js-expanded" type="button">
+      <button class="condenser" type="button">
         <img src="" alt="condense or expand" />
       </button>
-      <span class="rating">stars:${rating||'Not yet rated'}</span>
+      <span class="rating">stars:${rating||' Not yet rated'}</span>
     </div>`;
 };
 
@@ -106,8 +105,14 @@ const generateTopPartOfBookmark = function(title, rating){
 const bindTogetherAllListings = function(bookmarkList) {};
 
 //////////////event handlers///////////////
-const handleClickExpandBookmark = function() {
-  
+const handleClickExpandOrCondenseBookmark = function() {
+  $('.condenser').on('click', event =>{
+    console.log('expand');
+    //get class of parent li
+    //if li is js-condensed switch to js-expanded and generate top AND bottom <-could remove class for binary state
+    //else if li is js-expanded switch to js-condensed <--or if it doesnt have js-condensed
+
+  });
 };
 
 const handleDeleteBookmark = function() {};
@@ -130,7 +135,8 @@ const handleSubmitBookmark = function() {
     
       console.log(formDataObj);
       render();
-      renderControls(); //controls are removed for adding mode putting them back after submission.
+      renderControls(); 
+      bindEventListeners();
     });
   });
 };
@@ -139,6 +145,7 @@ const handleFilterByRatingsOnBookmark = function() {
   $('select').on('change',event => {
     store.changeFilter(Number($('select option:selected').val())||5);
     render();
+
   });
 };
 
@@ -147,12 +154,14 @@ const handleCancelSubmitBookmark =  function() {
     store.setAdding();
     render();
     renderControls();
+    bindEventListeners();
   });
 };
 
 const handleClickShowAddBookmarkView = function() {
-  $('header').on('click','.add-new', event => {
+  $('.add-new').on('click', event => {
     store.setAdding(); //sets adding to true
+    console.log(store.adding);
     render();
     handleSubmitBookmark();
     handleCancelSubmitBookmark();

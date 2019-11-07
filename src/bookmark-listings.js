@@ -92,7 +92,8 @@ const generateTopPartOfBookmark = function(title, rating){
   return `<div class="top-part">
       <h2 class="bookmark-title">${title}</h2>
       <button class="deleter" type="button">
-        <img src="" alt="permanently delete bookmark"/>
+     
+        <i class="fa fa-trash-o" style="font-size:48px;"></i>
       </button>
       <button class="condenser" type="button">
         <img src="" alt="condense or expand" />

@@ -56,7 +56,7 @@ const renderControls = function() {
     <div class="controls">
       <button class="add-new">+ New</button>
       <select class="filter" name="filter">
-        <option value="">Filter by minimum rating</option>
+        <option value="null">Filter by minimum rating</option>
         <option value="5">5</option>
         <option value="4">4</option>
         <option value="3">3</option>
@@ -69,7 +69,7 @@ const renderControls = function() {
 const bindEventListeners = function() {
   handleSubmitBookmark();
   handleClickShowAddBookmarkView();
-  handleSubmitRatingOnBookmark();
+  handleFilterByRatingsOnBookmark();
   handleDisplayDetailedBookmark();
   handleDeleteBookmark();
   handleClickExpandBookmark();
@@ -111,7 +111,7 @@ const handleSubmitBookmark = function() {
     
     api.createBookmark(formDataObj).then(newBookmark=>{
       store.addBookmark(newBookmark);
-      
+    
       console.log(formDataObj);
       render();
       renderControls(); //controls are removed for adding mode putting them back after submission.
@@ -119,11 +119,15 @@ const handleSubmitBookmark = function() {
   });
 };
 
-const handleSubmitRatingOnBookmark = function() {};
+const handleFilterByRatingsOnBookmark = function() {
+  $('select').on('change',event => {
+    store.changeFilter(Number($('select option:selected').val())||5);
+    render();
+  });
+};
 
 const handleCancelSubmitBookmark =  function() {
   $('.cancel-new-bookmark').on('click', event => {
-    console.log( 'click' );
     store.setAdding();
     render();
     renderControls();

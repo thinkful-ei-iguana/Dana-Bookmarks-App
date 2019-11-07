@@ -19,9 +19,9 @@ const main = function() {
       bl.render();
     });
   //wait for user input and react to them
-  bl.bindEventListeners();
   bl.renderControls();
   bl.render();
+  bl.bindEventListeners();
 };
 
 $(main());

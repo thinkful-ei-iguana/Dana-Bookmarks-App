@@ -76,23 +76,39 @@ const bindEventListeners = function() {
 };
 
 const generateBookmarkListing = function(id, title, url, desc, rating) {
-  return `<li class="bookmark" id="${id}">
-  <div class="top-part">
-    <h2 class="bookmark-title">${title}</h2>
-    <button class="condenser js-expanded" type="button">
-      <img src="" alt="condense or expand" />
-    </button>
-    <span class="rating">stars:${rating||'Not yet rated'}</span>
-  </div>
-  <a class="bookmark-link" href="${url}">${url}</a>
-  <p class="description">${desc||'This bookmark has not been described'}</p>
+
+    
+  
+  return `<li class="bookmark js-condensed" id="${id}">
+  ${generateTopPartOfBookmark(title,rating)}
+  
 </li>`;
 };
+
+const generateBottomPartOfBookmark =  function (url,desc) {
+  return `<div class="remainder">
+    <a class="bookmark-link" href="${url}">${url}</a>
+    <p class="description">${desc||'This bookmark has not been described'}</p>
+  </div>`
+};
+
+const generateTopPartOfBookmark = function(title, rating){
+  return `<div class="top-part">
+      <h2 class="bookmark-title">${title}</h2>
+      <button class="condenser js-expanded" type="button">
+        <img src="" alt="condense or expand" />
+      </button>
+      <span class="rating">stars:${rating||'Not yet rated'}</span>
+    </div>`;
+};
+
 
 const bindTogetherAllListings = function(bookmarkList) {};
 
 //////////////event handlers///////////////
-const handleClickExpandBookmark = function() {};
+const handleClickExpandBookmark = function() {
+  
+};
 
 const handleDeleteBookmark = function() {};
 

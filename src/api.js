@@ -13,19 +13,26 @@ const apiFetch = function (...args){
   
   return fetch(...args)
     .then(res => {
-      if (res.ok) {
-        return res.json();
+      if (!res.ok) {
+        error = { code: res.status };
+        error.message = data.message;
+        console.log(res.status);
       }
-      error = { code: res.status };
+      console.log(res.status);
+      return res.json();
     })
     .then(data => {
       if (error) {
-        error.message = data.message;
+        console.log(data.message);
+        
         return Promise.reject(error.message);
       }
       console.log(data);
       return data;
-    }).catch(e=>store.setError(e));
+    }).catch(e=>{
+      store.setError(e);
+      console.log(store.error);
+    });
 };
 
 //private function that wraps options in a valid JSON givin a method and optional body

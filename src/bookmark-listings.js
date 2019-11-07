@@ -36,7 +36,7 @@ const render = function() {
     <ul class="bookmark-list"></ul>
     `);
     //check for filter by stars
-    const filteredBookmarks = [...store.bookmarks].filter(bookmark => bookmark.rating <= store.filter || !bookmark.rating);
+    const filteredBookmarks = [...store.bookmarks].filter(bookmark => bookmark.rating >= store.filter || !bookmark.rating);
 
     //render the main view
     $('.bookmark-list').html(
@@ -91,6 +91,9 @@ const generateBottomPartOfBookmark =  function (url,desc) {
 const generateTopPartOfBookmark = function(title, rating){
   return `<div class="top-part">
       <h2 class="bookmark-title">${title}</h2>
+      <button class="deleter" type="button">
+        <img src="" alt="permanently delete bookmark"/>
+      </button>
       <button class="condenser" type="button">
         <img src="" alt="condense or expand" />
       </button>
@@ -102,6 +105,7 @@ const generateTopPartOfBookmark = function(title, rating){
 const bindTogetherAllListings = function(bookmarkList) {};
 
 //////////////event handlers///////////////
+
 const handleClickExpandOrCondenseBookmark = function() {
   $('.bookmark').on('click','.condenser', event =>{
     
@@ -133,9 +137,19 @@ const handleClickExpandOrCondenseBookmark = function() {
   });
 };
 
-const handleDeleteBookmark = function() {};
-
-const handleDisplayDetailedBookmark = function() {};
+const handleDeleteBookmark = function() {
+  //wait for delete button click
+  $('.bookmark-list').on('click','.deleter',event => {
+    console.log('delete');
+    const bookmarkId=$(event.currentTarget).closest('li').attr('id');
+    //remove from server
+    api.deleteBookmark(bookmarkId)
+      .then(resp=>{
+        store.findAndDelete(bookmarkId);//remove from store
+        render();//render
+      });
+  });
+};
 
 const handleSubmitBookmark = function() {
   $('#add-new-form').on('submit', event => {
@@ -151,7 +165,6 @@ const handleSubmitBookmark = function() {
     api.createBookmark(formDataObj).then(newBookmark=>{
       store.addBookmark(newBookmark);
     
-      console.log(formDataObj);
       render();
       renderControls(); 
       bindEventListeners();

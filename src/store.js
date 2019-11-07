@@ -1,7 +1,7 @@
 const bookmarks = [];
 let adding = false;
 let error = null;
-let filter = 5;
+let filter = 1;
 
 const findById = function(id) {
   return this.bookmarks.find(bookmark => bookmark.id===id);
@@ -13,7 +13,7 @@ const addBookmark = function(bookmark) {
 };
 
 const findAndDelete = function(id) {
-  this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id===id);
+  this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id!==id);
 };
 
 const condensedState = function(id){

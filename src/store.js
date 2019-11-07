@@ -4,17 +4,21 @@ let error = null;
 let filter = 5;
 
 const findById = function(id) {
-  return this.bookmarks.find(bookmark=> bookmark.id===id);
+  return this.bookmarks.find(bookmark => bookmark.id===id);
 };
 
 const addBookmark = function(bookmark) {
   this.bookmarks.push(bookmark);
+  this.findAndUpdate(bookmark.id,{state:'c'});
 };
 
 const findAndDelete = function(id) {
   this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id===id);
 };
 
+const condensedState = function(id){
+  return this.findById(id).state;
+};
 
 //should this also return
 const changeFilter = function(number) { //takes a number between 1 and 5
@@ -22,7 +26,7 @@ const changeFilter = function(number) { //takes a number between 1 and 5
 };
 
 const findAndUpdate = function(id,newData) {
-  Object.assign(findById(id),newData);
+  Object.assign(this.findById(id),newData);
 };
 
 const setError = function(message) {
@@ -45,5 +49,6 @@ export default {
   filter,
   error,
   adding,
-  bookmarks
+  bookmarks,
+  condensedState
 };

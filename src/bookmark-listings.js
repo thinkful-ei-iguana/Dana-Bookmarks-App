@@ -42,7 +42,7 @@ const render = function() {
     $('.bookmark-list').html(
       filteredBookmarks
         .map(bkmk =>
-          generateBookmarkListing(bkmk.id, bkmk.title, bkmk.url, bkmk.desc, bkmk.rating)
+          generateBookmarkListing(bkmk.id, bkmk.title, bkmk.url, bkmk.desc, bkmk.rating, bkmk.state)
         )
         .join('')
     );
@@ -74,13 +74,10 @@ const bindEventListeners = function() {
   handleClickExpandOrCondenseBookmark();
 };
 
-const generateBookmarkListing = function(id, title, url, desc, rating) {
-
-    
-  
-  return `<li class="bookmark js-condensed" id="${id}">
+const generateBookmarkListing = function(id, title, url, desc, rating, state) {
+  return `<li class="bookmark ${state==='c'?'js-condensed':''}" id="${id}">
   ${generateTopPartOfBookmark(title,rating)}
-  
+  ${state==='x'?generateBottomPartOfBookmark(url,desc):''}
 </li>`;
 };
 
@@ -106,11 +103,32 @@ const bindTogetherAllListings = function(bookmarkList) {};
 
 //////////////event handlers///////////////
 const handleClickExpandOrCondenseBookmark = function() {
-  $('.condenser').on('click', event =>{
-    console.log('expand');
+  $('.bookmark').on('click','.condenser', event =>{
+    
     //get class of parent li
+    console.log('expand');
+    const parentNode = $(event.currentTarget).closest('li');
+    let parentNodeClass = parentNode.attr('class').split(' ');
+    const parentNodeId = parentNode.attr('id');
+    const parentStoreObj = store.findById(parentNodeId);
+    
     //if li is js-condensed switch to js-expanded and generate top AND bottom <-could remove class for binary state
-    //else if li is js-expanded switch to js-condensed <--or if it doesnt have js-condensed
+    if (parentNodeClass.includes('js-condensed')){
+      parentNode.attr('class', parentNodeClass.filter(c => c!=='js-condensed').join(' '));//set class to not have condensed
+      store.findAndUpdate(parentNodeId,{state:'x'});
+      parentNode.html(
+        generateTopPartOfBookmark(parentStoreObj.title,parentStoreObj.rating)
+        +generateBottomPartOfBookmark(parentStoreObj.url,parentStoreObj.desc)
+      );
+    }
+    else {
+      console.log(parentNodeClass);
+      parentNodeClass.push('js-condensed');
+      parentNode.attr('class', parentNodeClass.join(' '));
+      store.findAndUpdate(parentNodeId,{state:'x'});
+      parentNode.html(generateTopPartOfBookmark(parentStoreObj.title,parentStoreObj.rating));
+    }
+    
 
   });
 };
@@ -145,7 +163,7 @@ const handleFilterByRatingsOnBookmark = function() {
   $('select').on('change',event => {
     store.changeFilter(Number($('select option:selected').val())||5);
     render();
-
+    bindEventListeners();
   });
 };
 
@@ -171,5 +189,6 @@ const handleClickShowAddBookmarkView = function() {
 export default {
   bindEventListeners,
   render,
-  renderControls
+  renderControls,
+  handleClickExpandOrCondenseBookmark
 };

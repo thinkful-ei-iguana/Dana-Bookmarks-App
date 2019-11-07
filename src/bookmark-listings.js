@@ -163,11 +163,14 @@ const handleSubmitBookmark = function() {
     let formDataObj = Object.fromEntries(formData);
     
     api.createBookmark(formDataObj).then(newBookmark=>{
-      store.addBookmark(newBookmark);
-    
-      render();
-      renderControls(); 
-      bindEventListeners();
+      
+      handleFormError() || (function (){
+        store.addBookmark(newBookmark);
+        console.log('success');
+        render();
+        renderControls(); 
+        bindEventListeners();
+      })();
     });
   });
 };
@@ -198,6 +201,17 @@ const handleClickShowAddBookmarkView = function() {
     handleSubmitBookmark();
     handleCancelSubmitBookmark();
   });
+};
+
+const handleFormError = function () {
+  if(store.error){
+    alert(store.error);
+    handleSubmitBookmark();
+    handleCancelSubmitBookmark();
+    store.setError();
+    console.log(store.error);
+    return 1;
+  }
 };
 
 export default {

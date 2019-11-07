@@ -15,7 +15,6 @@ const apiFetch = function (...args){
     .then(res => {
       if (!res.ok) {
         error = { code: res.status };
-        error.message = data.message;
         console.log(res.status);
       }
       console.log(res.status);
@@ -23,6 +22,7 @@ const apiFetch = function (...args){
     })
     .then(data => {
       if (error) {
+        error.message = data.message;
         console.log(data.message);
         
         return Promise.reject(error.message);

@@ -92,23 +92,21 @@ const generateTopPartOfBookmark = function(title, rating){
   return `<div class="top-part">
       <h2 class="bookmark-title">${title}</h2>
       <button class="deleter" type="button">
-     
-        <i class="fa fa-trash-o" style="font-size:48px;"></i>
+        <i class="fa fa-trash-o trash" ></i>
       </button>
       <button class="condenser" type="button">
-        <img src="" alt="condense or expand" />
+      <i class="fa fa-plus-square-o plus" ></i>
       </button>
       <span class="rating">stars:${rating||' Not yet rated'}</span>
     </div>`;
 };
 
 
-const bindTogetherAllListings = function(bookmarkList) {};
 
 //////////////event handlers///////////////
 
 const handleClickExpandOrCondenseBookmark = function() {
-  $('.bookmark').on('click','.condenser', event =>{
+  $('main').on('click','.condenser', event =>{
     
     //get class of parent li
     console.log('expand');
@@ -140,7 +138,7 @@ const handleClickExpandOrCondenseBookmark = function() {
 
 const handleDeleteBookmark = function() {
   //wait for delete button click
-  $('.bookmark-list').on('click','.deleter',event => {
+  $('main').on('click','.deleter',event => {
     console.log('delete');
     const bookmarkId=$(event.currentTarget).closest('li').attr('id');
     //remove from server

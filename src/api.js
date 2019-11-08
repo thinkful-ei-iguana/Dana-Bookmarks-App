@@ -15,23 +15,20 @@ const apiFetch = function (...args){
     .then(res => {
       if (!res.ok) {
         error = { code: res.status };
-        console.log(res.status);
+
       }
-      console.log(res.status);
+
       return res.json();
     })
     .then(data => {
       if (error) {
         error.message = data.message;
-        console.log(data.message);
-        
         return Promise.reject(error.message);
       }
-      console.log(data);
+
       return data;
     }).catch(e=>{
       store.setError(e);
-      console.log(store.error);
     });
 };
 
@@ -50,7 +47,7 @@ const createBookmark = function (formData) {
   return apiFetch(baseURL,wrapOptions('POST',formData));
 };
 
-const updateBookmark = function (id, property) {//may not be used
+const updateBookmark = function (id, property) {
   return apiFetch(baseURL+`/${id}`, wrapOptions('PATCH',{property}));
 };
 

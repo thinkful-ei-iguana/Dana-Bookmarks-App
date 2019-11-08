@@ -14,10 +14,7 @@ const main = function() {
     .getBookmarks()
     .then(bookmarks => {
       bookmarks.forEach(bookmark=>store.addBookmark(bookmark));
-      // bookmarks.forEach(bookmark=>store.findAndUpdate(bookmark.id,{state:'c'}));
-      console.log(store.bookmarks);
       bl.render();
-      // bl.handleClickExpandOrCondenseBookmark();
     });
   //wait for user input and react to them
   bl.renderControls();

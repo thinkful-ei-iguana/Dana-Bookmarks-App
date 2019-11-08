@@ -109,7 +109,6 @@ const handleClickExpandOrCondenseBookmark = function() {
   $('main').on('click','.condenser', event =>{
     
     //get class of parent li
-    console.log('expand');
     const parentNode = $(event.currentTarget).closest('li');
     let parentNodeClass = parentNode.attr('class').split(' ');
     const parentNodeId = parentNode.attr('id');
@@ -125,7 +124,6 @@ const handleClickExpandOrCondenseBookmark = function() {
       );
     }
     else {
-      console.log(parentNodeClass);
       parentNodeClass.push('js-condensed');
       parentNode.attr('class', parentNodeClass.join(' '));
       store.findAndUpdate(parentNodeId,{state:'x'});
@@ -139,11 +137,10 @@ const handleClickExpandOrCondenseBookmark = function() {
 const handleDeleteBookmark = function() {
   //wait for delete button click
   $('main').on('click','.deleter',event => {
-    console.log('delete');
     const bookmarkId=$(event.currentTarget).closest('li').attr('id');
     //remove from server
     api.deleteBookmark(bookmarkId)
-      .then(resp=>{
+      .then(()=>{
         store.findAndDelete(bookmarkId);//remove from store
         render();//render
       });
@@ -165,28 +162,24 @@ const handleSubmitBookmark = function() {
       
       handleFormError() || (function (){
         store.addBookmark(newBookmark);
-        console.log('success');
         render();
         renderControls(); 
         handleClickShowAddBookmarkView();
         handleFilterByRatingsOnBookmark();
-        // bindEventListeners();
       })();
     });
   });
 };
 
 const handleFilterByRatingsOnBookmark = function() {
-  $('select').on('change',event => {
+  $('select').on('change',() => {
     store.changeFilter(Number($('select option:selected').val())||5);
     render(); 
-    // renderControls();
-    // bindEventListeners();
   });
 };
 
 const handleCancelSubmitBookmark =  function() {
-  $('.cancel-new-bookmark').on('click', event => {
+  $('.cancel-new-bookmark').on('click', () => {
     store.setAdding();
     render();
     renderControls();
@@ -197,9 +190,8 @@ const handleCancelSubmitBookmark =  function() {
 };
 
 const handleClickShowAddBookmarkView = function() {
-  $('.add-new').on('click', event => {
+  $('.add-new').on('click', () => {
     store.setAdding(); //sets adding to true
-    console.log(store.adding);
     render();
     handleSubmitBookmark();
     handleCancelSubmitBookmark();
@@ -212,7 +204,6 @@ const handleFormError = function () {
     handleSubmitBookmark();
     handleCancelSubmitBookmark();
     store.setError();
-    console.log(store.error);
     return 1;
   }
 };

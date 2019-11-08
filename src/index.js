@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import './main.css';
+import './styles/main.css';
 import api from './api';
 import bl from './bookmark-listings';
 import store from './store';

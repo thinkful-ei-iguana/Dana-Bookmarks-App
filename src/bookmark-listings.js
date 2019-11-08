@@ -13,15 +13,15 @@ const render = function() {
           <input type="text" name="url" id="bookmark-url" pattern="\\bhttps?:\\/\\/\\S{1,}" placeholder="http://www.example.com" required title="url must include http:// or https://">
           <label for="bookmark-title">title: </label>
           <input type="text" name="title" id="bookmark-title" placeholder="~Bookmark Title ~">
-          <fieldset role="radiogroup">
-              <legend for="bookmark-rating">Rating:</legend>
-              <label for="1-star">1 star</label><input type="radio" name="rating" id="1-star" value="1">
-              <label for="2-star">2 star</label><input type="radio" name="rating" id="2-stars" value="2">
-              <label for="3-star">3 star</label><input type="radio" name="rating" id="3-stars" value="3">
-              <label for="4-star">4 star</label><input type="radio" name="rating" id="4-stars" value="4">
-              <label for="5-star">5 star</label><input type="radio" name="rating" id="5-stars" value="5">
+          <fieldset aria-label="rate this">
+              <legend id="rate-this" for="bookmark-rating">Rating:</legend>
+              <span><label for="1-star">1 star</label><input type="radio" name="rating" id="1-star" value="1">
+              <span><label for="2-star">2 star</label><input type="radio" name="rating" id="2-stars" value="2" aria-label="1-star"></span>
+              <span><label for="3-star">3 star</label><input type="radio" name="rating" id="3-stars" value="3" aria-label="1-star"></span>
+              <span><label for="4-star">4 star</label><input type="radio" name="rating" id="4-stars" value="4" aria-label="1-star"></span>
+              <span><label for="5-star">5 star</label><input type="radio" name="rating" id="5-stars" value="5" aria-label="1-star"></span>
           </fieldset>
-          <textarea name="desc" id="desc" placeholder="Describe this bookmark here ..."></textarea>
+          <textarea name="desc" id="desc" placeholder="Describe this bookmark here ..." aria-label="describe your new bookmark"></textarea>
           <input type="submit" class="new-bookmark" value="Add New Bookmark">
           <input type="button" class="cancel-new-bookmark" value="Cancel">
         </form>
@@ -55,7 +55,7 @@ const renderControls = function() {
     <h1>My Bookmarks</h1>
     <div class="controls">
       <button class="add-new">+ New</button>
-      <select class="filter" name="filter">
+      <select class="filter" name="filter" aria-label="filter by minimum rating">
         <option value="null">Filter by minimum rating</option>
         <option value="5">5</option>
         <option value="4">4</option>
@@ -91,10 +91,10 @@ const generateBottomPartOfBookmark =  function (url,desc) {
 const generateTopPartOfBookmark = function(title, rating){
   return `<div class="top-part">
       <h2 class="bookmark-title">${title}</h2>
-      <button class="deleter" type="button">
+      <button class="deleter" type="button" aria-label="permanently delete">
         <i class="fa fa-trash-o trash" ></i>
       </button>
-      <button class="condenser" type="button">
+      <button class="condenser" type="button" aria-label="show more or show less">
       <i class="fa fa-plus-square-o plus" ></i>
       </button>
       <span class="rating">stars:${rating||' Not yet rated'}</span>

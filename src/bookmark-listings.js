@@ -168,7 +168,9 @@ const handleSubmitBookmark = function() {
         console.log('success');
         render();
         renderControls(); 
-        bindEventListeners();
+        handleClickShowAddBookmarkView();
+        handleFilterByRatingsOnBookmark();
+        // bindEventListeners();
       })();
     });
   });
@@ -178,8 +180,8 @@ const handleFilterByRatingsOnBookmark = function() {
   $('select').on('change',event => {
     store.changeFilter(Number($('select option:selected').val())||5);
     render(); 
-    renderControls();
-    bindEventListeners();
+    // renderControls();
+    // bindEventListeners();
   });
 };
 
@@ -188,7 +190,9 @@ const handleCancelSubmitBookmark =  function() {
     store.setAdding();
     render();
     renderControls();
-    bindEventListeners();
+    handleClickShowAddBookmarkView();
+    handleFilterByRatingsOnBookmark();
+    // bindEventListeners();
   });
 };
 

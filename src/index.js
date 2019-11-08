@@ -17,7 +17,7 @@ const main = function() {
       // bookmarks.forEach(bookmark=>store.findAndUpdate(bookmark.id,{state:'c'}));
       console.log(store.bookmarks);
       bl.render();
-      bl.handleClickExpandOrCondenseBookmark();
+      // bl.handleClickExpandOrCondenseBookmark();
     });
   //wait for user input and react to them
   bl.renderControls();
